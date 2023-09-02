@@ -1,4 +1,4 @@
-import 'package:sqflite/sqflite.dart';
+import 'package:sqflite/sqflite.dart'; // only mobile devices support
 import 'package:path_provider/path_provider.dart'; // for mobile devices directory
 import 'dart:io';
 import 'package:path/path.dart';
@@ -57,13 +57,8 @@ class NewsDbProvider {
     return null;
   }
 
-  // addItem : 결과값에 관심이 없으면 선언하지 않아서 dynamic 으로 처리되도록 한다.
-  addItem(ItemModel item) {
-    return db.insert("ItemModel", item.toMapForDbItemModel());
-  }
-
   // 처리결과에 관심이 있으면 Future<int> 로 선언한다.
-  // Future<int> addItem(ItemModel item) async {
-  //   return await db.insert("ItemModel", item.toMapForDbItemModel());
-  // }
+  Future<int> addItem(ItemModel item) async {
+    return await db.insert("ItemModel", item.toMapForDbItemModel());
+  }
 }
