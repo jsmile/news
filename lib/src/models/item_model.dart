@@ -85,6 +85,9 @@ class ItemModel extends Equatable {
     };
   }
 
+  ///
+  /// Api 로부터 Map 을 받아 ItemModel 을 생성
+  ///
   factory ItemModel.fromMap(Map<String, dynamic> map) {
     return ItemModel(
       id: map['id']?.toInt() ?? 0,
@@ -120,6 +123,48 @@ class ItemModel extends Equatable {
   //     descendants: int.parse(map['descendants'] ?? 0),
   //   );
   // }
+
+  ///
+  /// DB 로부터 Map 을 받아 ItemModel 을 생성
+  ///
+  factory ItemModel.fromDB(Map<String, dynamic> map) {
+    return ItemModel(
+      id: map['id']?.toInt() ?? 0,
+      deleted: map['deleted'] == 1,
+      type: map['type'] ?? '',
+      by: map['by'] ?? '',
+      time: map['time']?.toInt() ?? 0,
+      text: map['text'] ?? '',
+      dead: map['dead'] == 1,
+      parent: map['parent']?.toInt() ?? 0,
+      kids: jsonDecode(map['kids']), // Blob to List<int>
+      url: map['url'] ?? '',
+      score: map['score']?.toInt() ?? 0,
+      title: map['title'] ?? '',
+      descendants: map['descendants']?.toInt() ?? 0,
+    );
+  }
+
+  ///
+  /// DB 로부터 생성된 ItemModel 을 Map 으로 변환
+  ///
+  Map<String, dynamic> toMapForDbItemModel() {
+    return {
+      'id': id,
+      'deleted': deleted ? 1 : 0,
+      'type': type,
+      'by': by,
+      'time': time,
+      'text': text,
+      'dead': dead ? 1 : 0,
+      'parent': parent,
+      'kids': jsonEncode(kids),
+      'url': url,
+      'score': score,
+      'title': title,
+      'descendants': descendants,
+    };
+  }
 
   String toJson() => json.encode(toMap());
 
