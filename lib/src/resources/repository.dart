@@ -5,26 +5,41 @@ import 'news_api_provider.dart';
 import '../models/item_model.dart';
 
 class Repository {
-  NewsDbProvider dbProvider = NewsDbProvider();
-  NewsApiProvider apiProvider = NewsApiProvider();
+  // Source list
+  List<Source> sources = <Source>[
+    // NewsDbProvider(),  // DB 를 중복하여 open 할 위험이 있음.
+    newsDbProvider, // DB 가 중복되어 open 되는 것을 방지하기 위해 객체 참조 선언
+    NewsApiProvider(),
+  ];
+  // Cache list
+  List<Cache> caches = <Cache>[
+    newsDbProvider, // DB 가 중복되어 open 되는 것을 방지하기 위해 객체 참조 선언
+  ];
 
   // fetchTopIds
   Future<List<int>> fetchTopIds() {
-    return apiProvider.fetchTopIds();
+    // return apiProvider.fetchTopIds();
+    return sources[1].fetchTopIds(); // 특정 Source 에서만 fetchTopIds 를 수행하도록 함
   }
 
-  // fetchItem
+  // 복수개의 Source list 에서 for loop 를 돌며 fetchItem 을 반복하여 수행
   Future<ItemModel?> fetchItem(int id) async {
-    // 1. DB 에서 fetch
-    var item = await dbProvider.fetchItem(id);
-    if (item == null) {
-      // 2. DB 에 없으면 API 에서 fetch
-      item = await apiProvider.fetchItem(id);
-      // 3. API 에서 fetch 한 결과를 DB 에 저장
-      dbProvider.addItem(item); // DB 저장이 완료될 때까지 기다리지 않음.
-      // await dbProvider.addItem(item); // DB 저장이 완료될 때까지 기다림.
+    ItemModel? item;
+
+    // ItemModel 이 있는지 확인하여
+    for (var source in sources) {
+      item = await source.fetchItem(id);
+      if (item != null) {
+        break;
+      }
     }
 
+    // 찾은 ItemModel 을 cache 들에  저장하고
+    for (var cache in caches) {
+      cache.addItem(item!);
+    }
+
+    // ItemModel 을 반환
     return item;
   }
 }

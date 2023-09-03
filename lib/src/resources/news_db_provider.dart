@@ -10,6 +10,10 @@ import './repository.dart';
 class NewsDbProvider implements Source, Cache {
   late Database db; // DB instance 선언
 
+  NewsDbProvider() {
+    init(); // async constructor
+  }
+
   // async contructor
   init() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
@@ -73,3 +77,7 @@ class NewsDbProvider implements Source, Cache {
     return await db.insert("ItemModel", item.toMapForDbItemModel());
   }
 }
+
+// NewsDbProvider의 DB 중복해서 open 하지 않도록
+// NewsDbProvider 의 instance 를 생성하여 export
+final newsDbProvider = NewsDbProvider();
