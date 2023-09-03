@@ -14,9 +14,9 @@ class Repository {
   }
 
   // fetchItem
-  Future<ItemModel> fetchItem(int id) async {
+  Future<ItemModel?> fetchItem(int id) async {
     // 1. DB 에서 fetch
-    var item = dbProvider.fetchItem(id);
+    var item = await dbProvider.fetchItem(id);
     if (item == null) {
       // 2. DB 에 없으면 API 에서 fetch
       item = await apiProvider.fetchItem(id);
@@ -27,4 +27,13 @@ class Repository {
 
     return item;
   }
+}
+
+abstract class Source {
+  Future<List<int>> fetchTopIds();
+  Future<ItemModel?> fetchItem(int id);
+}
+
+abstract class Cache {
+  Future<int> addItem(ItemModel item);
 }

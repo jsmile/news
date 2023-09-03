@@ -5,8 +5,9 @@ import 'package:path/path.dart';
 import 'dart:async';
 
 import '../models/item_model.dart';
+import './repository.dart';
 
-class NewsDbProvider {
+class NewsDbProvider implements Source, Cache {
   late Database db; // DB instance 선언
 
   // async contructor
@@ -41,8 +42,17 @@ class NewsDbProvider {
     );
   }
 
+  // abstract class 의 형식을 맞춰주기 위해 null 을 반환함
+  @override
+  Future<List<int>> fetchTopIds() {
+    // Future(() => <int>[]) : Future type으로 List<init> 의 null 을 반환하는 방법
+    return Future(() => <int>[]);
+  }
+
   // fetchItem
-  dynamic fetchItem(int id) async {
+  // Future<ItemModel?> : Future<ItemMode> 의 null 을 반환하는 방법
+  @override
+  Future<ItemModel?> fetchItem(int id) async {
     final maps = await db.query(
       'Items',
       columns: null, // null means all columns
@@ -58,6 +68,7 @@ class NewsDbProvider {
   }
 
   // 처리결과에 관심이 있으면 Future<int> 로 선언한다.
+  @override
   Future<int> addItem(ItemModel item) async {
     return await db.insert("ItemModel", item.toMapForDbItemModel());
   }
