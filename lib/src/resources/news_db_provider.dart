@@ -74,7 +74,7 @@ class NewsDbProvider implements Source, Cache {
   // 처리결과에 관심이 있으면 Future<int> 로 선언한다.
   @override
   Future<int> addItem(ItemModel item) async {
-    return await db.insert("ItemModel", item.toMapForDbItemModel());
+    return await db.insert("Item", item.toMapForDbItemModel());
   }
 }
 
