@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import './stories_bloc.dart';
 
+///
+/// Bloc 를 화면과 연결시키기 위한 Provider
+/// - InheritedWidget 을 상속받아서 사용
 class StoriesProvider extends InheritedWidget {
   final StoriesBloc bloc;
 

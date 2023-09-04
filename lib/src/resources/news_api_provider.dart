@@ -8,6 +8,9 @@ import './repository.dart';
 import '../models/item_model.dart';
 import '../utils/ansi_color.dart';
 
+///
+/// 외부( API )로부터 Data 를 가져오는 Provider
+///
 class NewsApiProvider implements Source {
   final Client client = Client();
 

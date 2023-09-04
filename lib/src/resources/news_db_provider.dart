@@ -7,6 +7,9 @@ import 'dart:async';
 import '../models/item_model.dart';
 import './repository.dart';
 
+///
+/// 외부( DB ) Data 작업을 처리하는 Provider
+///
 class NewsDbProvider implements Source, Cache {
   late Database db; // DB instance 선언
 
