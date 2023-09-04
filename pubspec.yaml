@@ -21,6 +21,10 @@ dependencies:
   http: ^1.1.0
   ansicolor: ^2.0.1
 
+  ## old rxdart( 0.23.0 이전 ) : Stream 대신 Observable 사용
+  ## rxdart: ^0.22.6
+  rxdart: ^0.27.7
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
