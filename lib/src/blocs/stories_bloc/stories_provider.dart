@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import './stories_bloc.dart';
+//  export : StoriesProvider를 사용하는 곳에서 StoriesBloc 을 사용할 수 있도록 함.
+export './stories_bloc.dart';
 
 ///
 /// Bloc 를 화면과 연결시키기 위한 Provider
