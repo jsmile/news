@@ -39,7 +39,11 @@ Widget buildList(StoriesBloc storiesBloc) {
         );
       }
 
-      return const Text('Still waitting on Ids.....');
+      return const Center(
+        child: CircularProgressIndicator(
+          color: Colors.blue,
+        ),
+      );
     },
   );
 }
