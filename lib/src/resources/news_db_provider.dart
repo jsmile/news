@@ -5,7 +5,7 @@ import 'package:path/path.dart';
 import 'dart:async';
 
 import '../models/item_model.dart';
-import './repository.dart';
+import './repository.dart'; // abstract class Source, Cache 를 참조하기 위해 import
 
 ///
 /// 외부( DB ) Data 작업을 처리하는 Provider
