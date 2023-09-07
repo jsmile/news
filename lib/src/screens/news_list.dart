@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:news/src/blocs/stories_bloc/stories_bloc.dart';
 
 import '../blocs/stories_bloc/stories_provider.dart';
+import '../widgets/news_list_tile.dart';
 
 class NewsList extends StatelessWidget {
   const NewsList({super.key});
@@ -23,18 +24,40 @@ class NewsList extends StatelessWidget {
 }
 
 Widget buildList(StoriesBloc storiesBloc) {
-  return StreamBuilder(
+  // return StreamBuilder(
+  //   stream: storiesBloc.topIds,
+  //   builder: (context, snapshot) {
+  //     if (snapshot.hasData) {
+  //       return ListView.builder(
+  //         // itemCount: snapshot.data.length,
+  //         // itemCount: (snapshot.data as List?)?.length ?? 0,  // null 대응
+  //         itemCount: (snapshot.data as List).length, // null 대응
+  //         itemBuilder: (context, index) {
+  //           // return Text(snapshot.data[index]);
+  //           // return Text((snapshot.data as List<String>?)?[index] ?? ''); // null 대응
+  //           // return Text('${(snapshot.data as List<int>)[index]}'); // null 대응
+  //           return NewsListTile(itemId: snapshot.data[index]); // [] conditional error
+  //         },
+  //       );
+  //     }
+
+  //     return const Center(
+  //       child: CircularProgressIndicator(
+  //         color: Colors.blue,
+  //       ),
+  //     );
+  //   },
+  // );
+
+  return StreamBuilder<List<int>>(
     stream: storiesBloc.topIds,
+    // snapshot: AsyncSnapshot<List<int>>
     builder: (context, snapshot) {
       if (snapshot.hasData) {
         return ListView.builder(
-          // itemCount: snapshot.data.length,
-          // itemCount: (snapshot.data as List?)?.length ?? 0,  // null 대응
-          itemCount: (snapshot.data as List).length, // null 대응
+          itemCount: snapshot.data!.length,
           itemBuilder: (context, index) {
-            // return Text(snapshot.data[index]);
-            // return Text((snapshot.data as List<String>?)?[index] ?? ''); // null 대응
-            return Text('${(snapshot.data as List<int>)[index]}'); // null 대응
+            return NewsListTile(itemId: snapshot.data![index]);
           },
         );
       }
