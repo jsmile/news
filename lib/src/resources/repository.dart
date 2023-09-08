@@ -23,20 +23,21 @@ class Repository {
   }
 
   // 복수개의 Source list 에서 for loop 를 돌며 fetchItem 을 반복하여 수행
-  Future<ItemModel?> fetchItem(int id) async {
-    ItemModel? item;
+  Future<ItemModel> fetchItem(int id) async {
+    late ItemModel item;
 
     // ItemModel 이 있는지 확인하여
     for (var source in sources) {
-      item = await source.fetchItem(id);
-      if (item != null) {
+      var tempItem = await source.fetchItem(id);
+      if (tempItem != null) {
+        item = tempItem;
         break;
       }
     }
 
     // 찾은 ItemModel 을 cache 들에  저장하고
     for (var cache in caches) {
-      cache.addItem(item!);
+      cache.addItem(item);
     }
 
     // ItemModel 을 반환

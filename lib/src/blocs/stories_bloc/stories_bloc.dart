@@ -1,6 +1,6 @@
 import 'package:rxdart/rxdart.dart';
 
-import './stories_provider.dart';
+// import './stories_provider.dart';
 import '../../models/item_model.dart';
 import '../../resources/repository.dart';
 
@@ -18,10 +18,10 @@ class StoriesBloc {
   // // Single Transformer 사용을 위한 선언
   // late final PublishSubject<Map<int, Future<ItemModel>>> cachedItemsSubject;
 
-  // 중복 방지를 위해 Transformer 가 적용된 stream 에 사용
-  final _itemsOutput = BehaviorSubject<Map<int, Future<ItemModel>>>();
   // cached Map item을 위한 Transformer 적용에 사용
   final _itemsFetcher = PublishSubject<int>();
+  // 중복 방지를 위해 Transformer 가 적용된 stream 에 사용
+  final _itemsOutput = BehaviorSubject<Map<int, Future<ItemModel>>>();
 
   // Stream 구하기
   Stream<List<int>> get topIds => _topIdsSubject.stream;
@@ -43,7 +43,7 @@ class StoriesBloc {
   // sink.add 구하기 : stream 에 data 를 추가하면 BehaviorSubject 에서
   // 가장 최근 Event data 를 추출할 수 있으므로.
   // Function(int) get addItem => _items.sink.add;
-  Function(int) get addItem => _itemsFetcher.sink.add;
+  Function(int) get fetchItem => _itemsFetcher.sink.add;
 
   // topIds 가 사용자의 직접적인 input 이 아니라 외부에서 불러온 것이므로
   // stream 에 직접적으로 sink 를 추가하지 않고, fetchTopIds() 에서 sink 를 추가함.
@@ -54,14 +54,15 @@ class StoriesBloc {
     _topIdsSubject.sink.add(ids);
   }
 
-  /// stream 의 event 를 map 으로 변환하여 반환
+  /// ScanStreamTransformer() : stream 의 event 를 map 으로 변환하여 반환
   /// - 복수개의 StreamBuidler() 사용에 대응
   _itemsTransformer() {
     return ScanStreamTransformer(
       // stream event 가 발생할 때마다 실행되는 함수
-      (Map<int, Future<ItemModel?>> cache, int id, index) {
+      (Map<int, Future<ItemModel>> cache, int id, index) {
+        print('### id : $id, index : $index ###');
         // cache: map, id: 매 event 마다 전달되는 data
-        cache[id] = _repository.fetchItem(id); // map 에 data 추가
+        cache[id] = _repository.fetchItem(id);
         return cache;
       },
       // 이 함수가 사용하는 초기값( empty map )

@@ -57,6 +57,7 @@ Widget buildList(StoriesBloc storiesBloc) {
         return ListView.builder(
           itemCount: snapshot.data!.length,
           itemBuilder: (context, index) {
+            storiesBloc.fetchItem(snapshot.data![index]);
             return NewsListTile(itemId: snapshot.data![index]);
           },
         );
