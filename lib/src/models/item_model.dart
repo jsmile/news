@@ -11,7 +11,7 @@ class ItemModel extends Equatable {
   final String text;
   final bool dead;
   final int parent;
-  final List<int> kids;
+  final List<dynamic> kids;
   final String url;
   final int score;
   final String title;
@@ -70,14 +70,14 @@ class ItemModel extends Equatable {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'deleted': deleted,
+      'deleted': deleted ? 1 : 0,
       'type': type,
       'by': by,
       'time': time,
       'text': text,
-      'dead': dead,
+      'dead': dead ? 1 : 0,
       'parent': parent,
-      'kids': kids,
+      'kids': jsonEncode(kids),
       'url': url,
       'score': score,
       'title': title,
@@ -90,19 +90,20 @@ class ItemModel extends Equatable {
   ///
   factory ItemModel.fromMap(Map<String, dynamic> map) {
     return ItemModel(
-      id: map['id']?.toInt() ?? 0,
+      id: map['id'],
       deleted: map['deleted'] ?? false,
-      type: map['type'] ?? '',
-      by: map['by'] ?? '',
-      time: map['time']?.toInt() ?? 0,
+      type: map['type'],
+      by: map['by'],
+      time: map['time'],
       text: map['text'] ?? '',
       dead: map['dead'] ?? false,
-      parent: map['parent']?.toInt() ?? 0,
-      kids: List<int>.from(map['kids']),
-      url: map['url'] ?? '',
-      score: map['score']?.toInt() ?? 0,
-      title: map['title'] ?? '',
-      descendants: map['descendants']?.toInt() ?? 0,
+      parent: map['parent'] ?? 0,
+      // kids: List<int>.from(map['kids']),
+      kids: map['kids'] ?? [],
+      url: map['url'],
+      score: map['score'],
+      title: map['title'],
+      descendants: map['descendants'],
     );
   }
 
@@ -137,7 +138,9 @@ class ItemModel extends Equatable {
       text: map['text'] ?? '',
       dead: map['dead'] == 1,
       parent: map['parent']?.toInt() ?? 0,
-      kids: jsonDecode(map['kids']), // Blob to List<int>
+      // kids: jsonDecode(map['kids']),
+      kids: jsonDecode(map['kids']),
+      // Blob to List<int>
       url: map['url'] ?? '',
       score: map['score']?.toInt() ?? 0,
       title: map['title'] ?? '',

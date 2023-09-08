@@ -20,7 +20,7 @@ class NewsDbProvider implements Source, Cache {
   // async contructor
   init() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    final path = join(documentsDirectory.path, 'item.db'); // DB 생성
+    final path = join(documentsDirectory.path, 'items.db'); // DB 생성
     db = await openDatabase(
       // DB 연결
       path,
@@ -77,7 +77,7 @@ class NewsDbProvider implements Source, Cache {
   // 처리결과에 관심이 있으면 Future<int> 로 선언한다.
   @override
   Future<int> addItem(ItemModel item) async {
-    return await db.insert("Item", item.toMapForDbItemModel());
+    return await db.insert("Items", item.toMapForDbItemModel());
   }
 }
 
