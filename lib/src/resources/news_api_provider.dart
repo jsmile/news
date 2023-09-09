@@ -34,6 +34,6 @@ class NewsApiProvider implements Source {
     debugPrint(success('### response.body: ${response.body}'));
 
     final parsedJson = json.decode(response.body);
-    return ItemModel.fromMap(parsedJson);
+    return ItemModel.fromJsonMap(parsedJson);
   }
 }

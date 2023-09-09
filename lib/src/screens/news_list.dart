@@ -50,6 +50,7 @@ Widget buildList(StoriesBloc storiesBloc) {
   // );
 
   return StreamBuilder<List<int>>(
+    // topIds stream 구독
     stream: storiesBloc.topIds,
     // snapshot: AsyncSnapshot<List<int>>
     builder: (context, snapshot) {
@@ -57,7 +58,7 @@ Widget buildList(StoriesBloc storiesBloc) {
         return ListView.builder(
           itemCount: snapshot.data!.length,
           itemBuilder: (context, index) {
-            storiesBloc.fetchItem(snapshot.data![index]);
+            storiesBloc.addItem(snapshot.data![index]);
             return NewsListTile(itemId: snapshot.data![index]);
           },
         );

@@ -77,8 +77,33 @@ class NewsDbProvider implements Source, Cache {
   // 처리결과에 관심이 있으면 Future<int> 로 선언한다.
   @override
   Future<int> addItem(ItemModel item) async {
-    return await db.insert("Items", item.toMapForDbItemModel());
+    return await db.insert(
+      "Items",
+      item.toMapForDbItemModel(),
+      conflictAlgorithm: ConflictAlgorithm.ignore, // 중복된 데이터는 무시
+    );
   }
+
+  // https://pub.dev/packages/sqflite
+  // // Insert some records in a transaction
+  // await database.transaction((txn) async {
+  //   int id1 = await txn.rawInsert(
+  //       'INSERT INTO Test(name, value, num) VALUES("some name", 1234, 456.789)');
+  //   print('inserted1: $id1');
+  //   int id2 = await txn.rawInsert(
+  //       'INSERT INTO Test(name, value, num) VALUES(?, ?, ?)',
+  //       ['another name', 12345678, 3.1416]);
+  //   print('inserted2: $id2');
+  // });
+
+  // // Update some record
+  // int count = await database.rawUpdate(
+  //     'UPDATE Test SET name = ?, value = ? WHERE name = ?',
+  //     ['updated name', '9876', 'some name']);
+  // print('updated: $count');
+
+  // // Get the records
+  // List<Map> list = await database.rawQuery('SELECT * FROM Test');
 }
 
 // NewsDbProvider의 DB 중복해서 open 하지 않도록
