@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart'; // 내부적으로 Navigator 를 가지고 있음.
 import 'dart:async';
 
 import '../blocs/stories_bloc/stories_provider.dart';
@@ -34,14 +34,16 @@ class NewsListTile extends StatelessWidget {
             }
 
             // return Text(itemSnapshot.data!.title);
-            return buildTile(itemSnapshot.data!);
+            // return buildTile(itemSnapshot.data!);
+            // Navigator.pushNamed() 를 사용하기 위해 BuildContext 추가
+            return buildTile(context, itemSnapshot.data!);
           },
         );
       },
     );
   }
 
-  Widget buildTile(ItemModel item) {
+  Widget buildTile(BuildContext context, ItemModel item) {
     return Column(
       children: [
         ListTile(
@@ -53,6 +55,9 @@ class NewsListTile extends StatelessWidget {
               Text('${item.descendants}'),
             ],
           ),
+          onTap: () {
+            Navigator.pushNamed(context, '${item.id}');
+          },
         ),
         const Divider(
           height: 8.0,
