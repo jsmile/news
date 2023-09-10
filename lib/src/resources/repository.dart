@@ -38,6 +38,7 @@ class Repository {
 
     // 찾은 ItemModel 을 cache 들에  저장하고
     for (var cache in caches) {
+      // cache.addItem(item);
       // 동일한 source 에 읽었다가 다시 쓰는 것을 방지함.( Unique Contraint failed 대응 )
       if (cache != source) {
         cache.addItem(item);

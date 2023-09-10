@@ -80,13 +80,13 @@ class ItemModel extends Equatable {
       time: map['time'],
       text: map['text'] ?? '',
       dead: map['dead'] ?? false,
-      parent: map['parent'],
+      parent: map['parent'] ?? 0,
       // kids: List<int>.from(map['kids']),
       kids: map['kids'] ?? [],
       url: map['url'],
       score: map['score'],
       title: map['title'],
-      descendants: map['descendants'],
+      descendants: map['descendants'] ?? 0,
     );
   }
 

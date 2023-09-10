@@ -3,6 +3,7 @@ import 'dart:async';
 
 import '../blocs/stories_bloc/stories_provider.dart';
 import '../models/item_model.dart';
+import './loading_container.dart';
 
 class NewsListTile extends StatelessWidget {
   final int itemId;
@@ -12,13 +13,15 @@ class NewsListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     StoriesBloc bloc = StoriesProvider.of(context);
+
     return StreamBuilder<Map<int, Future<ItemModel>>>(
       // stream: bloc.cachedItemsSubject,
       // cachedItemsSubject 대신 transformer 중복 실행 방지가 처리된 _itemOutput 사용
       stream: bloc.items,
       builder: (context, AsyncSnapshot<Map<int, Future<ItemModel>>> snapshot) {
         if (!snapshot.hasData) {
-          return const Text('Stream still loading');
+          // return const Text('Stream still loading');
+          return const LoadingContainer();
         }
         // 계속되는 Stream event 를 Async 로 1회만 처리하고 종료하기 위해 FutureBuilder 사용
         // 계속되는 Stream event 를 연속적으로 사용해야 할 때에는 사용하지 않음.
@@ -26,13 +29,35 @@ class NewsListTile extends StatelessWidget {
           future: snapshot.data![itemId],
           builder: (context, AsyncSnapshot<ItemModel> itemSnapshot) {
             if (!itemSnapshot.hasData) {
-              return Text('Still loading item $itemId');
+              // return Text('Still loading item $itemId');
+              return const LoadingContainer();
             }
 
-            return Text(itemSnapshot.data!.title);
+            // return Text(itemSnapshot.data!.title);
+            return buildTile(itemSnapshot.data!);
           },
         );
       },
+    );
+  }
+
+  Widget buildTile(ItemModel item) {
+    return Column(
+      children: [
+        ListTile(
+          title: Text(item.title),
+          subtitle: Text('${item.score}'),
+          trailing: Column(
+            children: [
+              const Icon(Icons.comment),
+              Text('${item.descendants}'),
+            ],
+          ),
+        ),
+        const Divider(
+          height: 8.0,
+        ),
+      ],
     );
   }
 }
