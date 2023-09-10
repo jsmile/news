@@ -3,6 +3,7 @@ import 'package:news/src/blocs/stories_bloc/stories_bloc.dart';
 
 import '../blocs/stories_bloc/stories_provider.dart';
 import '../widgets/news_list_tile.dart';
+import '../widgets/refresh.dart';
 
 class NewsList extends StatelessWidget {
   const NewsList({super.key});
@@ -55,12 +56,17 @@ Widget buildList(StoriesBloc storiesBloc) {
     // snapshot: AsyncSnapshot<List<int>>
     builder: (context, snapshot) {
       if (snapshot.hasData) {
-        return ListView.builder(
-          itemCount: snapshot.data!.length,
-          itemBuilder: (context, index) {
-            storiesBloc.addItem(snapshot.data![index]);
-            return NewsListTile(itemId: snapshot.data![index]);
-          },
+        // RefeshIndicator 적용
+        return Refresh(
+          child: ListView.builder(
+            itemCount: snapshot.data!.length,
+            itemBuilder: (context, index) {
+              storiesBloc.addItem(snapshot.data![index]);
+              return NewsListTile(
+                itemId: snapshot.data![index],
+              );
+            },
+          ),
         );
       }
 

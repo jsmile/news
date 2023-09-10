@@ -48,6 +48,13 @@ class Repository {
     // ItemModel 을 반환
     return item;
   }
+
+  // clearCache : RefreshIndicator() 에 의해 사용됨
+  clearCache() async {
+    for (var cache in caches) {
+      await cache.clear(); // await : future<int> 대응
+    }
+  }
 }
 
 abstract class Source {
@@ -57,4 +64,5 @@ abstract class Source {
 
 abstract class Cache {
   Future<int> addItem(ItemModel item);
+  Future<int> clear();
 }

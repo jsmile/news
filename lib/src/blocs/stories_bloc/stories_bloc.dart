@@ -72,6 +72,11 @@ class StoriesBloc {
     );
   }
 
+  // clearCache : RefreshIndicator() 에 의해 사용됨
+  clearCache() {
+    return _repository.clearCache();
+  }
+
   dispose() {
     _topIdsSubject.close();
     _itemsFetcher.close();

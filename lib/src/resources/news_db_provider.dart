@@ -85,6 +85,11 @@ class NewsDbProvider implements Source, Cache {
     );
   }
 
+  // Table 의 data 제거
+  Future<int> clear() {
+    return db.delete('Items');
+  }
+
   // https://pub.dev/packages/sqflite
   // // Insert some records in a transaction
   // await database.transaction((txn) async {
