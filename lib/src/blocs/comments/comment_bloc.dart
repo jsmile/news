@@ -27,7 +27,7 @@ class CommentsBloc {
 
   // central transformer
   _commentsTransformer() {
-    // // 방법 1 :
+    // // 방법 1 :  StreamTransformer<S,T>.fromHandlers()
     // return StreamTransformer<int, Map<int, Future<ItemModel>>>.fromHandlers(
     //     handleData: (int id, EventSink<Map<int, Future<ItemModel>>> sink) {
     //   final cache = _commentsOutput.value ?? <int, Future<ItemModel>>{};
@@ -42,13 +42,13 @@ class CommentsBloc {
     //   sink.add(cache);
     // });
 
-    // 방법 2 : ScanStreamTransformer
+    // 방법 2 : ScanStreamTransformer<S,T>
     return ScanStreamTransformer<int, Map<int, Future<ItemModel>>>(
       (cache, int id, index) {
+        print('### index : $index');
         cache[id] = _repository.fetchItem(id);
+        // recursive call
         cache[id]!.then((ItemModel item) {
-          // recursive call
-
           // forEach() 에서는 await 를 사용할 수 없으므로 즉 Future 반환 X
           // item.kids.forEach((kidsId) => addFetchItemWithComments(kidsId));
 

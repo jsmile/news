@@ -86,6 +86,7 @@ class NewsDbProvider implements Source, Cache {
   }
 
   // Table 의 data 제거
+  @override
   Future<int> clear() {
     return db.delete('Items');
   }

@@ -12,7 +12,10 @@ class Refresh extends StatelessWidget {
     return RefreshIndicator(
       child: child,
       onRefresh: () async {
+        // cache clear
         await storiesBloc.clearCache(); // await :  repository 의 await 에 대응
+        // topIds 재요청 --> central transformer --> _itemsOutput.stream
+        // 따라서 _itemsOutput.stream 을 구독하고 있는 StreamBuilder 재갱신
         await storiesBloc.fetchTopIds();
       },
     );

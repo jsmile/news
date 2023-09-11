@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart'; // 내부적으로 Navigator 를 가지고 있음.
-import 'package:news/src/screens/news_detail.dart';
 
 import 'screens/news_list.dart';
 import 'blocs/stories_bloc/stories_provider.dart';
+import 'screens/news_detail.dart';
+import 'blocs/comments/comments_provider.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -10,12 +11,14 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // MatrialApp 이하의 모든 Widget 에서 StoriesBloc 을 사용 가능하게 만듬.
-    return StoriesProvider(
-      child: MaterialApp(
-        title: 'News',
-        debugShowCheckedModeBanner: false,
-        // home: NewsList(),
-        onGenerateRoute: route, // 객체 생성이 아니라 함수 참조
+    return CommentsProvider(
+      child: StoriesProvider(
+        child: MaterialApp(
+          title: 'News',
+          debugShowCheckedModeBanner: false,
+          // home: NewsList(),
+          onGenerateRoute: route, // 객체 생성이 아니라 함수 참조
+        ),
       ),
     );
   }
@@ -39,6 +42,10 @@ class App extends StatelessWidget {
             //   or data fetching for the NewsDetail widget.
 
             final itemId = int.parse(settings.name!.replaceFirst('/', ''));
+            // 상세정보의 댓글 조회를 위해 sink.add() 로 stream event를 발생시킴
+            final commentsBloc = CommentsProvider.of(context);
+            commentsBloc.addFetchItemWithComments(itemId);
+
             return NewsDetail(itemId: itemId);
           },
         );
