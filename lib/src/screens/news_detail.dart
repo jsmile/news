@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../blocs/comments/comments_provider.dart';
 import '../models/item_model.dart';
+import '../widgets/comment.dart';
 
 // 전달받은 것을 사용할 뿐
 // itemId 를 내부에서 변경시키지 않으므로 StatelessWidget 사용
@@ -38,9 +39,30 @@ class NewsDetail extends StatelessWidget {
               if (!itemSnapshot.hasData) {
                 return const Text('Loading ....');
               }
-              return buildTitle(itemSnapshot.data!);
+
+              return buildList(itemSnapshot.data!, snapshot.data!);
             });
       },
+    );
+  }
+
+  // item : TopId 상세정보용
+  // cachedMap : TopId 하위 comments 정보용
+  Widget buildList(ItemModel item, Map<int, Future<ItemModel>> cachedMap) {
+    final commentList = item.kids.map((kidsId) {
+      // kids 갯수만큼 Comment 위젯 생성
+      return Comment(
+        itemId: kidsId,
+        itemMap: cachedMap,
+      );
+    });
+
+    final children = <Widget>[]; // 복수개의 comment 들을 담을 수 있도록 별도의 children 리스트 생성
+    children.add(buildTitle(item));
+    children.addAll(commentList);
+
+    return ListView(
+      children: children,
     );
   }
 
