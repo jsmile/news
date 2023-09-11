@@ -23,7 +23,26 @@ class Comment extends StatelessWidget {
           return const Text('Loading comment...');
         }
 
-        return Text(snapshot.data!.text);
+        // recursive comments
+        final item = snapshot.data;
+        final children = <Widget>[
+          ListTile(
+            title: Text(item!.text),
+            subtitle: Text(item.by),
+          ),
+          const Divider(),
+        ];
+        for (var kidId in item.kids) {
+          children.add(
+            Comment(
+              itemId: kidId,
+              itemMap: itemMap,
+            ),
+          );
+        }
+        return Column(
+          children: children,
+        );
       },
     );
   }
