@@ -29,7 +29,14 @@ class App extends StatelessWidget {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (context) => const NewsList(),
+          builder: (context) {
+            // 조회를 위한 사전 설정 정보 제공(sink.add)에 사용
+            final StoriesBloc storiesBloc = StoriesProvider.of(context);
+            // TopIds에 대한 stream 에 sink.add() 로 stream event 를 발생시킴
+            storiesBloc.fetchTopIds();
+            // event( 조회 ) 결과 UI 적용
+            return const NewsList();
+          },
         );
 
       case '/detail':
