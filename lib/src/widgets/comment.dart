@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../models/item_model.dart';
 import '../utils/util_funcs.dart';
+// import 'html_link_text.dart';
 import 'loading_container.dart';
 
 class Comment extends StatelessWidget {
@@ -30,6 +31,7 @@ class Comment extends StatelessWidget {
         // recursive comments
         final item = snapshot.data;
         final children = <Widget>[
+          // HtmlLinkText(linkedText: item!.text),
           ListTile(
             title: Text(htmlEscapeToNormal(item!.text)),
             // 삭제된 댓글의 경우 by가 없음
