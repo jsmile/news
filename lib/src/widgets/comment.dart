@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../models/item_model.dart';
+import '../utils/util_funcs.dart';
 
 class Comment extends StatelessWidget {
   final int itemId;
@@ -29,7 +30,7 @@ class Comment extends StatelessWidget {
         final item = snapshot.data;
         final children = <Widget>[
           ListTile(
-            title: Text(item!.text),
+            title: Text(htmlEscapeToNormal(item!.text)),
             // 삭제된 댓글의 경우 by가 없음
             subtitle: item.by == '' ? const Text('Deleted') : Text(item.by),
             contentPadding: EdgeInsets.only(
@@ -54,4 +55,27 @@ class Comment extends StatelessWidget {
       },
     );
   }
+
+  // // Html 용 특수문자를 일반문자로 변환
+  // String htmlEscapeToNormal(String input, {bool escape = true}) {
+  //   var table = const [
+  //     ['&', '&amp;'],
+  //     ['<', '&lt;'],
+  //     ['>', '&gt;'],
+  //     ['"', '&quot;'],
+  //     ["'", '&#x27;'],
+  //     ['\n\n', '<p>'],
+  //     ['', '</p>'],
+  //     ['/', '&#x2F;'],
+  //     ['`', '&#96;'],
+  //     ['=', '&#x3D;'],
+  //   ];
+  //   if (!escape) {
+  //     table = table.reversed.toList();
+  //   }
+  //   for (var item in table) {
+  //     input = input.replaceAll(item[1], item[0]);
+  //   }
+  //   return input;
+  // }
 }
