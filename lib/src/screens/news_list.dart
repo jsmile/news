@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:news/src/blocs/stories_bloc/stories_bloc.dart';
 
 import '../blocs/stories_bloc/stories_provider.dart';
 import '../widgets/news_list_tile.dart';
@@ -11,9 +10,9 @@ class NewsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final storiesBloc = StoriesProvider.of(context);
-    // Just for testing
-    // It's very very bad code
-    storiesBloc.fetchTopIds();
+    // // Just for testing
+    // // It's very very bad code
+    // storiesBloc.fetchTopIds();
 
     return Scaffold(
       appBar: AppBar(
