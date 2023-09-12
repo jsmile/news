@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../models/item_model.dart';
 import '../utils/util_funcs.dart';
+import 'loading_container.dart';
 
 class Comment extends StatelessWidget {
   final int itemId;
@@ -23,7 +24,7 @@ class Comment extends StatelessWidget {
       future: itemMap[itemId],
       builder: (context, AsyncSnapshot<ItemModel> snapshot) {
         if (!snapshot.hasData) {
-          return const Text('Loading comment...');
+          return const LoadingContainer();
         }
 
         // recursive comments
