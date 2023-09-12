@@ -7,11 +7,13 @@ import '../models/item_model.dart';
 class Comment extends StatelessWidget {
   final int itemId;
   final Map<int, Future<ItemModel>> itemMap;
+  final int depth;
 
   const Comment({
     Key? key,
     required this.itemId,
     required this.itemMap,
+    required this.depth,
   }) : super(key: key);
 
   @override
@@ -28,7 +30,12 @@ class Comment extends StatelessWidget {
         final children = <Widget>[
           ListTile(
             title: Text(item!.text),
-            subtitle: Text(item.by),
+            // 삭제된 댓글의 경우 by가 없음
+            subtitle: item.by == '' ? const Text('Deleted') : Text(item.by),
+            contentPadding: EdgeInsets.only(
+              right: 16.0,
+              left: (depth == 0) ? 16.0 : depth * 16.0,
+            ),
           ),
           const Divider(),
         ];
@@ -37,6 +44,7 @@ class Comment extends StatelessWidget {
             Comment(
               itemId: kidId,
               itemMap: itemMap,
+              depth: depth + 1, // 매 comment 의 kidIds 는 depth 증가
             ),
           );
         }

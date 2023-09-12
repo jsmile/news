@@ -54,6 +54,7 @@ class NewsDetail extends StatelessWidget {
       return Comment(
         itemId: kidsId,
         itemMap: cachedMap,
+        depth: 0, // Detail 의 comment 는 depth 0
       );
     });
 
