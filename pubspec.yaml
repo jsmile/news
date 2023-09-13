@@ -1,5 +1,5 @@
 name: news
-description: A Flutter Repository( ApiProvider & DbProvider ) project.
+description: A Flutter Repository( ApiProvider & DbProvider & BLoC ) project.
 
 
 publish_to: 'none' 

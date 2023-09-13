@@ -22,6 +22,10 @@ class NewsDbProvider implements Source, Cache {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     final path = join(documentsDirectory.path, 'items.db'); // DB 생성
 
+    print('#############################');
+    print('### DB Directory Path : $path');
+    print('#############################');
+
     db = await openDatabase(
       // DB 연결
       path,
@@ -80,7 +84,7 @@ class NewsDbProvider implements Source, Cache {
   Future<int> addItem(ItemModel item) async {
     return await db.insert(
       "Items",
-      item.toMapForDbItemModel(),
+      item.toDbMap(),
       conflictAlgorithm: ConflictAlgorithm.ignore, // 중복된 데이터는 무시
     );
   }

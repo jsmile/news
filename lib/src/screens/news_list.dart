@@ -60,6 +60,7 @@ Widget buildList(StoriesBloc storiesBloc) {
           child: ListView.builder(
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) {
+              // cached itemMap 를 위한 stream 활성화( sink.add )
               storiesBloc.addItem(snapshot.data![index]);
               return NewsListTile(
                 itemId: snapshot.data![index],

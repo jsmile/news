@@ -156,7 +156,7 @@ class ItemModel extends Equatable {
   /// DB 에 ItemModel 을 저장하기 위해 Map 으로 변환
   /// - true/false 를 1/0 으로 변환
   ///
-  Map<String, dynamic> toMapForDbItemModel() {
+  Map<String, dynamic> toDbMap() {
     return {
       'id': id,
       'deleted': deleted ? 1 : 0,

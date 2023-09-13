@@ -1,10 +1,13 @@
 # news
 
-A Flutter Repository( ApiProvider & DbProvider ) project.
+A Flutter Repository( ApiProvider & DbProvider & BLoC ) project.
 
 ## Getting Started
 
 This project is a starting point for a Flutter application.
+
+It is a bloc pattern project with no specific bloc library.
+And it includes showing recursive items.
 
 A few resources to get you started if this is your first Flutter project:
 

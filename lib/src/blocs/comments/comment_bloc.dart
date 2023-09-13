@@ -4,6 +4,7 @@ import 'package:rxdart/rxdart.dart';
 import '../../models/item_model.dart';
 import '../../resources/repository.dart';
 
+// Bloc : Data 를 구해서 Stream 에 반영하는 역할
 class CommentsBloc {
   // data를 구할 수 있는 Repository 선언
   final _repository = Repository();
@@ -20,10 +21,10 @@ class CommentsBloc {
   }
 
   // 외부 공개 Stream getter
-  Stream<Map<int, Future<ItemModel>>> get itemWithCommentsStream =>
-      _commentsOutput.stream;
   // temp Stream sink.add getter
   Function(int) get addFetchItemWithComments => _commentsFetcher.sink.add;
+  Stream<Map<int, Future<ItemModel>>> get itemWithCommentsStream =>
+      _commentsOutput.stream;
 
   // central transformer
   _commentsTransformer() {
