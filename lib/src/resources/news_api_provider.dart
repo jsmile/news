@@ -23,7 +23,7 @@ class NewsApiProvider implements Source {
     debugPrint(success('### response.body: ${response.body}'));
     final ids = json.decode(response.body);
 
-    // cast<T>() : T type 의 List 반환 :   List<dynamic> -> List<int>
+    // List.cast<T>() : T type 의 List 반환 :   List<dynamic> -> List<int>
     return ids.cast<int>();
   }
 

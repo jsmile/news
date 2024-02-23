@@ -20,7 +20,7 @@ class NewsDbProvider implements Source, Cache {
   // async contructor
   init() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-    final path = join(documentsDirectory.path, 'items.db'); // DB 생성
+    final path = join(documentsDirectory.path, 'items.db'); // DB 생성 경로
 
     print('#############################');
     print('### DB Directory Path : $path');
@@ -57,7 +57,7 @@ class NewsDbProvider implements Source, Cache {
   // abstract class 의 형식을 맞춰주기 위해 null 을 반환함
   @override
   Future<List<int>> fetchTopIds() {
-    // Future(() => <int>[]) : Future type으로 List<init> 의 null 을 반환하는 방법
+    // Future(() => <int>[]) : Future type으로 List<int> 의 null 을 반환하는 방법
     return Future(() => <int>[]);
   }
 

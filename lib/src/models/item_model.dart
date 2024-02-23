@@ -123,8 +123,8 @@ class ItemModel extends Equatable {
       dead: map['dead'] == 1,
       parent: map['parent'],
       // kids: jsonDecode(map['kids']),
-      kids: jsonDecode(map['kids']),
       // Blob to List<int>
+      kids: jsonDecode(map['kids']),
       url: map['url'],
       score: map['score'],
       title: map['title'],
