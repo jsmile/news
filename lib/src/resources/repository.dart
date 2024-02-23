@@ -8,7 +8,7 @@ class Repository {
   // data 조회와 저장을 하는 Provider 가 구분되므로 Source 와 Cache 를 분리함.
   List<Source> sources = <Source>[
     // NewsDbProvider(),  // DB 를 중복하여 open 할 위험이 있음.
-    newsDbProvider, // DB 가 중복되어 open 되는 것을 방지하기 위해 객체 참조 선언
+    newsDbProvider, // DB 가 중복되어 open 되는 것을 방지하기 위해 생성자 X instance 참조 선언
     NewsApiProvider(),
   ];
 

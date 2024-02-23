@@ -118,5 +118,5 @@ class NewsDbProvider implements Source, Cache {
 }
 
 // NewsDbProvider의 DB 중복해서 open 하지 않도록
-// NewsDbProvider 의 instance 를 생성하여 export
+// 생성자를 사용하지 않고, NewsDbProvider 의 instance 를 생성하여 export
 final newsDbProvider = NewsDbProvider();
