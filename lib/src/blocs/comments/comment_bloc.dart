@@ -54,7 +54,7 @@ class CommentsBloc {
           // item.kids.forEach((kidsId) => addFetchItemWithComments(kidsId));
 
           for (var kidsId in item.kids) {
-            // kidsId 를 사용하여 바로 _commentsFetcher Stream 에 sink 하여 재귀호출
+            // kidsId 를 사용하여 바로 선두 임시 Stream 에 sink 하여 재귀호출
             addFetchItemWithComments(kidsId);
           }
         });

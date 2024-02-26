@@ -137,12 +137,12 @@ class ItemModel extends Equatable {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'deleted': deleted ?? false,
+      'deleted': deleted,
       'type': type,
       'by': by,
       'time': time,
-      'text': text ?? '',
-      'dead': dead ?? false,
+      'text': text,
+      'dead': dead,
       'parent': parent,
       'kids': jsonEncode(kids),
       'url': url,
