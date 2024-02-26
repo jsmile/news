@@ -10,7 +10,7 @@ import '../../resources/repository.dart';
 class StoriesBloc {
   // data를 구할 수 있는 Repository 선언
   final _repository = Repository();
-  // Subject( = rxdart 의 brocast StreamController ) 선언
+  // Subject( = rxdart 의 일반적인 brocast StreamController ) 선언
   final _topIdsSubject = PublishSubject<List<int>>();
 
   // // 가장 최근 Event data 를 추출할 수 있는 BehaviorSubject 선언
@@ -20,7 +20,8 @@ class StoriesBloc {
 
   // cached Map item 생성을 위한 통합 Transformer 적용에 사용
   final _itemsFetcher = PublishSubject<int>();
-  // 중복 방지를 위해 Transformer 가 적용된 stream 에 사용
+  // stream 의 최신 emit broadcast StreamController
+  // : 중복 방지를 위해 Transformer 가 적용된 stream 에 사용
   final _itemsOutput = BehaviorSubject<Map<int, Future<ItemModel>>>();
 
   // Stream 외부 공개
@@ -67,7 +68,7 @@ class StoriesBloc {
         cache[id] = _repository.fetchItem(id);
         return cache;
       },
-      // 이 함수가 사용하는 초기값( empty map )
+      // 이 함수가 사용하는 초기값( empty map ) : cache 가 비어있는 상태로 시작
       <int, Future<ItemModel>>{},
     );
   }
