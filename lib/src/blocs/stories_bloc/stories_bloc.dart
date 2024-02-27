@@ -13,14 +13,14 @@ class StoriesBloc {
   // Subject( = rxdart 의 일반적인 brocast StreamController ) 선언
   final _topIdsSubject = PublishSubject<List<int>>();
 
-  // // 가장 최근 Event data 를 추출할 수 있는 BehaviorSubject 선언
+  // // 가장 최근 data Event 를 추출할 수 있는 BehaviorSubject 선언
   // final _items = BehaviorSubject<int>();
   // // Single Transformer 사용을 위한 선언
   // late final PublishSubject<Map<int, Future<ItemModel>>> cachedItemsSubject;
 
   // cached Map item 생성을 위한 통합 Transformer 적용에 사용
   final _itemsFetcher = PublishSubject<int>();
-  // stream 의 최신 emit broadcast StreamController
+  // stream 의 최신 data 이벤트 broadcast StreamController
   // : 중복 방지를 위해 Transformer 가 적용된 stream 에 사용
   final _itemsOutput = BehaviorSubject<Map<int, Future<ItemModel>>>();
 
@@ -37,7 +37,9 @@ class StoriesBloc {
     // cachedItemsSubject = _items.stream.transform(_itemsTransformer())
     //     as PublishSubject<Map<int, Future<ItemModel>>>;
 
-    //_itemsFetcher 에 통합 transformer를 적용하여 pipe()를 통해서 자동으로 _itemsOupput 에게 전달
+    // stream.transform() : stream 에 transformer 를 적용하여 반환
+    // ScanStreamTransformer() 에 통합 transformer를 한번 더 적용하고,
+    //  pipe()를 통해서 자동으로 _itemsOupput 에게 전달
     _itemsFetcher.stream.transform(_itemsTransformer()).pipe(_itemsOutput);
   }
 
