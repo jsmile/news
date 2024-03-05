@@ -93,6 +93,7 @@ class NewsDbProvider implements Source, Cache {
   @override
   Future<int> clear() {
     return db.delete('Items');
+    // int count = await db.delete( 테이블명, where: 'columnId = ?', whereArgs: [id] );
   }
 
   // https://pub.dev/packages/sqflite

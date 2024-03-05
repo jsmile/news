@@ -64,7 +64,11 @@ class StoriesBloc {
   _itemsTransformer() {
     return ScanStreamTransformer(
       // stream event 가 발생할 때마다 실행되는 함수
-      (Map<int, Future<ItemModel>> cache, int id, index) {
+      (
+        Map<int, Future<ItemModel>> cache,
+        int id,
+        index,
+      ) {
         print('### id : $id, index : $index ###');
         // cache: map, id: 매 event 마다 전달되는 data
         cache[id] = _repository.fetchItem(id);
@@ -77,6 +81,7 @@ class StoriesBloc {
 
   // clearCache : RefreshIndicator() 에 의해 사용됨
   clearCache() {
+    // await 에 의해서 Future<int> 가 자동으로 반환됨으로 return 사용가능
     return _repository.clearCache();
   }
 
