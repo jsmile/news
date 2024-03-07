@@ -6,8 +6,11 @@ import '../models/item_model.dart';
 import '../utils/util_funcs.dart';
 import 'loading_container.dart';
 
+/// 하나의 commit 와 바로 하위의 kids 들의 commit 표시
 class Comment extends StatelessWidget {
+  // 상위 commit 를 위한 id
   final int itemId;
+  // kids 를 찾기위해 반복해서 호출이 필요한 전체 cache map
   final Map<int, Future<ItemModel>> itemMap;
   final int depth;
 
@@ -20,6 +23,7 @@ class Comment extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // FutureBuilder : 대상 data 가 Future<T> 인 경우에 사용됨
     return FutureBuilder(
       future: itemMap[itemId],
       builder: (context, AsyncSnapshot<ItemModel> snapshot) {
