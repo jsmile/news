@@ -13,7 +13,7 @@ class StoriesBloc {
   // Subject( = rxdart 의 일반적인 brocast StreamController ) 선언
   final _topIdsSubject = PublishSubject<List<int>>();
 
-  // // 가장 최근 Event data 를 추출할 수 있는 BehaviorSubject 선언
+  // // 가장 최근 data Event 를 추출할 수 있는 BehaviorSubject 선언
   // final _items = BehaviorSubject<int>();
   // // Single Transformer 사용을 위한 선언
   // late final PublishSubject<Map<int, Future<ItemModel>>> cachedItemsSubject;
@@ -37,7 +37,9 @@ class StoriesBloc {
     // cachedItemsSubject = _items.stream.transform(_itemsTransformer())
     //     as PublishSubject<Map<int, Future<ItemModel>>>;
 
-    //_itemsFetcher 에 통합 transformer를 적용하여 pipe()를 통해서 자동으로 _itemsOupput 에게 전달
+    // stream.transform() : stream 에 transformer 를 적용하여 반환
+    // ScanStreamTransformer() 에 통합 transformer를 한번 더 적용하고,
+    //  pipe()를 통해서 자동으로 _itemsOupput 에게 전달
     _itemsFetcher.stream.transform(_itemsTransformer()).pipe(_itemsOutput);
   }
 
@@ -62,7 +64,11 @@ class StoriesBloc {
   _itemsTransformer() {
     return ScanStreamTransformer(
       // stream event 가 발생할 때마다 실행되는 함수
-      (Map<int, Future<ItemModel>> cache, int id, index) {
+      (
+        Map<int, Future<ItemModel>> cache,
+        int id,
+        index,
+      ) {
         print('### id : $id, index : $index ###');
         // cache: map, id: 매 event 마다 전달되는 data
         cache[id] = _repository.fetchItem(id);
@@ -75,6 +81,7 @@ class StoriesBloc {
 
   // clearCache : RefreshIndicator() 에 의해 사용됨
   clearCache() {
+    // await 에 의해서 Future<int> 가 자동으로 반환됨으로 return 사용가능
     return _repository.clearCache();
   }
 

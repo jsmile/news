@@ -52,7 +52,8 @@ class Repository {
   // clearCache : RefreshIndicator() 에 의해 사용됨
   clearCache() async {
     for (var cache in caches) {
-      await cache.clear(); // await : future<int> 대응
+      // return 키워드가 없어도 자동으로 Future<int> 반환
+      await cache.clear(); // await : future<int> 반환에 대응
     }
   }
 }

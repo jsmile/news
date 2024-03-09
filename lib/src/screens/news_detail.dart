@@ -56,7 +56,7 @@ class NewsDetail extends StatelessWidget {
         itemMap: cachedMap,
         depth: 0, // Detail 의 comment 는 depth 0
       );
-    });
+    }).toList();
 
     final children = <Widget>[]; // 복수개의 comment 들을 담을 수 있도록 별도의 children 리스트 생성
     children.add(buildTitle(item));
